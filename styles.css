@@ -6,6 +6,11 @@ body {
   background-color: #e5e5e5;
 }
 
+.completed {
+  background-color: #8bc34a;
+  transition: background-color 0.5s ease;
+}
+
 .container {
   background-color: white;
   border-radius: 8px;
@@ -23,10 +28,13 @@ body {
 input[type="text"] {
   width: 100%;
   height: 3em;
-  line-height: 3em;
   border-radius: 8px;
   border: 1px solid #b8b8b8;
   padding: 0 3em 0 1em;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 .image-button-post {
@@ -39,11 +47,6 @@ input[type="text"] {
   cursor: pointer;
 }
 
-.image-button-post img {
-  width: 25px;
-  height: 25px;
-}
-
 .image-button {
   background-color: transparent;
   padding: 5px 5px;
@@ -52,18 +55,20 @@ input[type="text"] {
   cursor: pointer;
 }
 
-.image-button img {
+.image-button-post img, .image-button img {
   width: 25px;
   height: 25px;
 }
 
-.completed {
-  background-color: #8bc34a;
-  transition: background-color 0.5s ease;
+.button-container {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
 }
 
-* {
-  box-sizing: border-box;
+.image-button-post img:hover, .button-container button:hover, .image-button:hover {
+  background-color: #e5e5e5;
+  transition: all .3s linear;
 }
 
 .my-list {
