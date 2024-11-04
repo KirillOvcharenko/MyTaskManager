@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="scripts.js"></script>
+</head>
+<body>
+  <div class="container" id="container-new-task">
+    <h2>Нове завдання / Редагування</h2>
+    <hr>
+    <form id="new-task-form" onsubmit="submitNewTask(event)">
+      <input type="text" id="newItem" name="newItem" placeholder="Введіть завдання..." required>
+      <div class="form-row">
+        <label for="category">Категорія</label>
+        <select id="category" name="category" required>
+          <option value="home">Дім</option>
+          <option value="work">Робота</option>
+          <option value="hobby">Хобі</option>
+          <option value="health">Здоров'я</option>
+        </select>
+      </div>
+      <hr>
+      <button type="submit" id="add-task-button"><img src="images/icon-post.png" alt=""></button>
+    </form>
+  </div>
+</body>
+</html>
