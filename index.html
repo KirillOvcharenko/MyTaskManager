@@ -9,14 +9,10 @@
 </head>
 <body>
   <div class="container">
-    <form class="newItem" onsubmit="addTask(event)">
-      <div class="input-container">
-        <input type="text" id="newItem" name="newItem" placeholder="Введіть завдання...">
-        <button class="image-button-post" type="submit"><img src="images/icon-post.png" alt="Post"></button>
-      </div>
-    </form>
+    <button id="new-task-button" onclick="window.location.href='new-task.html'"><img src="images/icon-post.png" alt=""></button>
     <hr>
     <ul id="task-list" class="my-list"></ul>
+    <hr>
     <div class="button-container">
       <button class="image-button" onclick="showAllTasks()"><img src="images/icon-all-task-list.png" alt=""></button>
       <button class="image-button" onclick="showCurrentTasks()"><img src="images/icon-task-list.png" alt=""></button>

@@ -17,21 +17,36 @@ function addTask(event) {
   newItemInput.value = "";
 }
 
-function addTaskToDOM(task, isCompleted) {
-  var newTask = document.createElement("li");
+function addTaskToDOM(taskText, isCompleted, category) {
+  const newTask = document.createElement("li");
+  newTask.classList.add("task-item");
   newTask.classList.toggle("completed", isCompleted);
 
   newTask.innerHTML = `
     <button class="image-button" onclick="completeTask(this)"><img src="images/icon-done.png" alt="Done"></button>
     <button class="image-button" onclick="editTask(this)"><img src="images/icon-edit.png" alt="Edit"></button>
     <button class="image-button" onclick="deleteTask(this)"><img src="images/icon-delete.png" alt="Delete"></button>
-    <span class="task-text">${task}</span>`;
-    
-  var taskList = document.getElementById("task-list");
+    <span class="task-text">${taskText}</span>
+    <span class="category-label ${category ? `category-${category}` : ''}">${getCategoryLabel(category)}</span>
+  `;
+
+  const taskList = document.getElementById("task-list");
+  
   if (isCompleted) {
     taskList.appendChild(newTask);
   } else {
     taskList.insertBefore(newTask, taskList.firstChild);
+  }
+}
+
+
+function getCategoryLabel(category) {
+  switch (category) {
+    case "home": return "Дім";
+    case "work": return "Робота";
+    case "hobby": return "Хобі";
+    case "health": return "Здоров'я";
+    default: return "";
   }
 }
 
@@ -50,7 +65,7 @@ function completeTask(button) {
   li.classList.add("completed");
   setTimeout(() => {
     li.remove();
-    document.getElementById("task-list").appendChild(li);
+    showAllTasks();
   }, 500);
 }
 
@@ -91,7 +106,14 @@ function deleteTask(button) {
 function showAllTasks() {
   document.getElementById("task-list").innerHTML = "";
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
-  taskList.forEach(task => addTaskToDOM(task.text, task.completed));
+  
+  taskList
+    .filter(task => !task.completed)
+    .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
+  
+  taskList
+    .filter(task => task.completed)
+    .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 
 function showCurrentTasks() {
@@ -99,7 +121,7 @@ function showCurrentTasks() {
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
   taskList
     .filter(task => !task.completed)
-    .forEach(task => addTaskToDOM(task.text, task.completed));
+    .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 
 function showCompletedTasks() {
@@ -107,7 +129,7 @@ function showCompletedTasks() {
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
   taskList
     .filter(task => task.completed)
-    .forEach(task => addTaskToDOM(task.text, task.completed));
+    .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 
 function deleteCompletedTasks() {
@@ -117,9 +139,25 @@ function deleteCompletedTasks() {
   showAllTasks();
 }
 
+function submitNewTask(event) {
+  event.preventDefault();
+  
+  const newItemInput = document.getElementById("newItem");
+  const newItemValue = newItemInput.value;
+  const categorySelect = document.getElementById("category");
+  const categoryValue = categorySelect.value;
+
+  if (newItemValue.trim() !== "") {
+    const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+    taskList.push({ text: newItemValue, category: categoryValue, completed: false });
+    localStorage.setItem('taskList', JSON.stringify(taskList));
+
+    window.location.href = 'index.html';
+  }
+}
+
 window.onload = function() {
-  let savedTasks = JSON.parse(localStorage.getItem('taskList')) || [];
-  for (let i = 0; i < savedTasks.length; i++) {
-    addTaskToDOM(savedTasks[i].text, savedTasks[i].completed);
+  if (window.location.pathname.endsWith("index.html")) {
+    showAllTasks();
   }
 };
