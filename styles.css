@@ -119,6 +119,17 @@ body {
   padding: 0;
 }
 
+.my-list li {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  border: 1px solid #b8b8b8;
+  word-break: break-all;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
 * {
   box-sizing: border-box;
 }
