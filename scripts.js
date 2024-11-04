@@ -103,32 +103,41 @@ function deleteTask(button) {
   li.remove();
 }
 
+function getSelectedCategory() {
+  return document.getElementById("category-filter").value;
+}
+
+function filterTasks() {
+  showAllTasks();
+}
+
 function showAllTasks() {
+  const category = getSelectedCategory();
   document.getElementById("task-list").innerHTML = "";
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
-  
+
   taskList
-    .filter(task => !task.completed)
-    .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
-  
-  taskList
-    .filter(task => task.completed)
+    .filter(task => (category === "" || task.category === category))
     .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 
 function showCurrentTasks() {
+  const category = getSelectedCategory();
   document.getElementById("task-list").innerHTML = "";
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+  
   taskList
-    .filter(task => !task.completed)
+    .filter(task => !task.completed && (category === "" || task.category === category))
     .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 
 function showCompletedTasks() {
+  const category = getSelectedCategory();
   document.getElementById("task-list").innerHTML = "";
   let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+  
   taskList
-    .filter(task => task.completed)
+    .filter(task => task.completed && (category === "" || task.category === category))
     .forEach(task => addTaskToDOM(task.text, task.completed, task.category));
 }
 

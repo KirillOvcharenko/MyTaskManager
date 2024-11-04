@@ -20,7 +20,7 @@ body {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #b8b8b8;
+  background-color: #dad8d8;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -112,6 +112,12 @@ body {
   display: flex;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.button-container select {
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
 .my-list {

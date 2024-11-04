@@ -14,6 +14,13 @@
     <ul id="task-list" class="my-list"></ul>
     <hr>
     <div class="button-container">
+      <select id="category-filter" onchange="filterTasks()">
+        <option value="">Всі категорії</option>
+        <option value="home">Дім</option>
+        <option value="work">Робота</option>
+        <option value="hobby">Хобі</option>
+        <option value="health">Здоров'я</option>
+      </select>
       <button class="image-button" onclick="showAllTasks()"><img src="images/icon-all-task-list.png" alt=""></button>
       <button class="image-button" onclick="showCurrentTasks()"><img src="images/icon-task-list.png" alt=""></button>
       <button class="image-button" onclick="showCompletedTasks()"><img src="images/icon-completed-task-list.png" alt=""></button>
