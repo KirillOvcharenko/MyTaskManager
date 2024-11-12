@@ -70,22 +70,11 @@ function completeTask(button) {
 }
 
 function editTask(button) {
-  var li = button.parentElement;
-  var taskTextSpan = li.querySelector('.task-text');
-  var currentText = taskTextSpan.innerText;
+  const li = button.parentElement;
+  const taskText = li.querySelector('.task-text').innerText;
+  const categoryLabel = li.querySelector('.category-label').classList[1].replace('category-', '');
 
-  var newTaskText = prompt("Редагування завдання:", currentText);
-  if (newTaskText !== null && newTaskText.trim() !== "") {
-    taskTextSpan.innerText = newTaskText;
-
-    var taskList = JSON.parse(localStorage.getItem('taskList')) || [];
-    var taskIndex = taskList.findIndex(task => task.text === currentText);
-
-    if (taskIndex > -1) {
-      taskList[taskIndex].text = newTaskText;
-      localStorage.setItem('taskList', JSON.stringify(taskList));
-    }
-  }
+  window.location.href = `new-task.html?text=${encodeURIComponent(taskText)}&category=${encodeURIComponent(categoryLabel)}`;
 }
 
 function deleteTask(button) {
@@ -156,17 +145,35 @@ function submitNewTask(event) {
   const categorySelect = document.getElementById("category");
   const categoryValue = categorySelect.value;
 
-  if (newItemValue.trim() !== "") {
-    const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
-    taskList.push({ text: newItemValue, category: categoryValue, completed: false });
-    localStorage.setItem('taskList', JSON.stringify(taskList));
+  let taskList = JSON.parse(localStorage.getItem('taskList')) || [];
+  const urlParams = new URLSearchParams(window.location.search);
+  const originalTaskText = urlParams.get('text');
 
-    window.location.href = 'index.html';
+  if (originalTaskText) {
+    const taskIndex = taskList.findIndex(task => task.text === decodeURIComponent(originalTaskText));
+    if (taskIndex > -1) {
+      taskList[taskIndex].text = newItemValue;
+      taskList[taskIndex].category = categoryValue;
+    }
+  } else {
+    taskList.push({ text: newItemValue, category: categoryValue, completed: false });
   }
+
+  localStorage.setItem('taskList', JSON.stringify(taskList));
+  window.location.href = 'index.html';
 }
 
 window.onload = function() {
   if (window.location.pathname.endsWith("index.html")) {
     showAllTasks();
+  }
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const taskText = urlParams.get('text');
+  const taskCategory = urlParams.get('category');
+
+  if (taskText && taskCategory) {
+    document.getElementById("newItem").value = decodeURIComponent(taskText);
+    document.getElementById("category").value = decodeURIComponent(taskCategory);
   }
 };
