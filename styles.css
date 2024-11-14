@@ -166,3 +166,12 @@ body {
 * {
   box-sizing: border-box;
 }
+
+@media (min-width: 600px) {
+  .container {
+    max-width: 800px;
+  }
+  .site-title {
+    font-size: 24px;
+  }
+}
