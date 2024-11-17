@@ -1,18 +1,44 @@
 body {
-  background-color: #e5e5e5;
+  background-color: var(--background-color);
+  color: var(--text-color);
   display: flex;
   justify-content: center; 
   align-items: center;
   flex-direction: column;
   margin: 0;
+  transition: background-color 0.3s, color 0.3s;
 }
+
+:root {
+  --background-color: #e5e5e5;
+  --text-color: #000;
+  --container-bg-color: white;
+  --header-bg-color: #f7f7f7;
+  --button-bg-color: #e5e5e5;
+  --filter-bg-color: white;
+  --filter-text-color: #000;
+  --input-bg-color: white;
+  --input-text-color: #000;
+}
+
+.dark-theme {
+  --background-color: #121212;
+  --text-color: #ffffff;
+  --container-bg-color: #3a3a3a;
+  --header-bg-color: #292929;
+  --button-bg-color: #292929;
+  --filter-bg-color: #3a3a3a;
+  --filter-text-color: #ffffff;
+  --input-bg-color: #3a3a3a;
+  --input-text-color: #ffffff;
+}
+
 .site-header {
+  background-color: var(--header-bg-color);
   width: 100%;
-  background-color: #f7f7f7;
   padding: 10px 20px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #ffffff;
   box-sizing: border-box;
 }
 
@@ -33,7 +59,7 @@ body {
 }
 
 .container {
-  background-color: white;
+  background-color: var(--container-bg-color);
   border-radius: 8px;
   margin: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -47,7 +73,7 @@ body {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #e5e5e5;
+  background-color: var(--button-bg-color);
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -58,6 +84,26 @@ body {
 #add-task-button img {
   width: 25px;
   height: 25px;
+}
+
+#theme-toggle-button {
+  margin-left: auto;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+#theme-toggle-button img {
+  width: 25px;
+  height: 25px;
+}
+
+#category-filter {
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--filter-bg-color);
+  color: var(--filter-text-color);
 }
 
 #new-task-form label {
@@ -79,6 +125,8 @@ body {
   border: 1px solid #b8b8b8;
   font-size: 16px;
   box-sizing: border-box;
+  background-color: var(--input-bg-color);
+  color: var(--input-text-color);
 }
 
 .form-row {
@@ -106,10 +154,10 @@ body {
   font-size: 16px;
   color: #ffffff;
   text-shadow: 
-                -1px -1px 0 #b8b8b8,  
-                1px -1px 0 #b8b8b8,
-                -1px 1px 0 #b8b8b8,
-                1px 1px 0 #b8b8b8;
+                -1px -1px 0 #3a3a3a,  
+                1px -1px 0 #3a3a3a,
+                -1px 1px 0 #3a3a3a,
+                1px 1px 0 #3a3a3a;
   text-align: center; 
 }
 

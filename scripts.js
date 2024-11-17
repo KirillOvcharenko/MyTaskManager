@@ -58,16 +58,20 @@ function completeTask(button) {
   var taskIndex = taskList.findIndex(task => task.text === taskText);
 
   if (taskIndex > -1) {
-    taskList[taskIndex].completed = true;
+    var [completedTask] = taskList.splice(taskIndex, 1);
+    completedTask.completed = true;
+    taskList.push(completedTask);
     localStorage.setItem('taskList', JSON.stringify(taskList));
   }
 
   li.classList.add("completed");
   setTimeout(() => {
     li.remove();
-    showAllTasks();
+    const taskListElement = document.getElementById("task-list");
+    taskListElement.appendChild(li);
   }, 500);
 }
+
 
 function editTask(button) {
   const li = button.parentElement;
@@ -162,6 +166,30 @@ function submitNewTask(event) {
   localStorage.setItem('taskList', JSON.stringify(taskList));
   window.location.href = 'index.html';
 }
+
+function toggleTheme() {
+  const isDarkTheme = document.body.classList.toggle('dark-theme');
+  localStorage.setItem('theme', isDarkTheme ? 'dark' : 'light');
+
+  const themeIcon = document.querySelector('#theme-toggle-button img');
+  themeIcon.src = isDarkTheme ? 'images/icon-light-theme.png' : 'images/icon-dark-theme.png';
+}
+
+function loadThemePreference() {
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    const themeIcon = document.querySelector('#theme-toggle-button img');
+    themeIcon.src = 'images/icon-light-theme.png';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadThemePreference();
+
+  const themeToggleButton = document.getElementById('theme-toggle-button');
+  themeToggleButton.addEventListener('click', toggleTheme);
+});
 
 window.onload = function() {
   if (window.location.pathname.endsWith("index.html")) {
